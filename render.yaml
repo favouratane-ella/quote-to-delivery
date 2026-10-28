@@ -1,0 +1,17 @@
+# One-click deploy on Render: New > Blueprint > point at this repo.
+# Free plan for a demo: the service sleeps when idle and its data resets when it restarts,
+# which suits the "Start over" demo. For real use, switch to a paid plan and add a Postgres
+# database (set DATABASE_URL), then keep the data between restarts.
+services:
+  - type: web
+    name: quote-to-delivery
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: AGENT_STEP_DELAY_MS
+        value: "300"
+      - key: REPLY_DELAY_MS
+        value: "6000"

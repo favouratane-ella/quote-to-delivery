@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+*.db
+.env
+frontend/node_modules/
+frontend/dist/
+
+server.log
+*.log
+backend/q2d.db*

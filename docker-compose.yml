@@ -1,0 +1,25 @@
+# Local production-like setup: the app plus Postgres.
+#   cp .env.example .env   (add your ANTHROPIC_API_KEY)
+#   docker compose up --build   ->  http://localhost:8000
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: q2d
+      POSTGRES_PASSWORD: q2d
+      POSTGRES_DB: q2d
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U q2d"]
+      interval: 5s
+      retries: 10
+  app:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://q2d:q2d@db:5432/q2d
+    ports: ["8000:8000"]
+    depends_on:
+      db: {condition: service_healthy}
+volumes:
+  pgdata:

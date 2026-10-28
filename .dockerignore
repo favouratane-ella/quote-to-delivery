@@ -1,0 +1,7 @@
+**/__pycache__
+**/*.db
+.env
+.git
+frontend/node_modules
+frontend/dist
+backend/.pytest_cache
